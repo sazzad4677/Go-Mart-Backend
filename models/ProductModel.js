@@ -80,17 +80,24 @@ const productSchema = new mongoose.Schema({
             }
         }
     ],
+    createdBy: {
+        type: String,
+        ref: 'User',
+        required: true,
+    },
+    role: {
+        type: String,
+        ref: 'User',
+        required: true,
+    },
     createdAt: {
         type: String,
         default: `${new Date().toDateString()} Time ${((new Date().getHours() % 12) || 12)}:${new Date().getMinutes()} ${((new Date().getHours() >= 12 ? 'pm' : 'am'))}`
     }
 })
 
-
-
 productSchema.pre('save', function (next) {
     this.productId = "GM-" + Date.now()+uuidv4().split("-").join("").slice(25,-1);
     next()
 })
-
 module.exports = mongoose.model('Product', productSchema);

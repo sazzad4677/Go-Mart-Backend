@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { newProduct, getProducts, getSingleProduct, updateSingleProduct, deleteSingleProduct, deleteMultiProduct } = require('../controllers/productController')
+const { newProduct, getProducts, getSingleProduct, updateSingleProduct, deleteSingleProduct, deleteMultiProduct, deleteAllProduct } = require('../controllers/productController')
 
 // add new products => /api/v1/product/new
 router.route('/product/new').post(newProduct);
@@ -15,5 +15,7 @@ router.route('/admin/update-product/:id').put(updateSingleProduct);
 router.route('/admin/delete-product/:id').delete(deleteSingleProduct);
 // delete multi products => /api/v1/admin/delete-products/
 router.route('/admin/delete-products').delete(deleteMultiProduct);
+// delete all products => /api/v1/admin/delete-all-products/
+router.route('/admin/delete-all-products').delete(deleteAllProduct);
 
 module.exports = router;

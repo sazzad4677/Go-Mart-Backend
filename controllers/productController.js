@@ -77,3 +77,16 @@ exports.deleteMultiProduct = catchAsyncErrors(async (req, res, next) => {
         message: 'Product is deleted',
     })
 })
+
+// Delete all product => /api/v1/admin/delete-all-products/
+exports.deleteAllProduct = catchAsyncErrors(async (req, res, next) => {
+    let products = await Product.find();
+    if (products.length === 0) {
+        return next(new ErrorHandler("Product not found", 404))
+    }
+    await Product.deleteMany();
+    res.status(200).json({
+        success: true,
+        message: 'Product is deleted',
+    })
+})

@@ -62,6 +62,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             enum: {
                 values: [
+                    'Active', 
                     'Banned',
                     'Permanent Banned',
                     'Restricted'

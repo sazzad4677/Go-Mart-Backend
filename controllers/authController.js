@@ -54,3 +54,46 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
         message: "Logged out successfully"
     })
 })
+
+// Get current login user profile=> api/v1/profile/:id
+exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.params.id)
+    res.status(200).json({
+        success: true,
+        user
+    })
+})
+
+
+// Update or change password => api/v1/password/update-password/:id
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.params.id).select("+password")
+
+    // Check previous password
+    const isMatch = await user.comparePassword(req.body.oldPassword)
+    if (!isMatch) {
+        return next(new ErrorHandler("Old Password is incorrect",))
+    }
+    user.password = req.body.password
+    await user.save()
+    sendToken(user, 200, res)
+})
+
+// Update profile => api/v1/profile/update/:id
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        username: req.body.username,
+    }
+    // Update profile picture: todo
+
+    await User.findByIdAndUpdate(req.params.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+    res.status(200).json({
+        success: true,
+    })
+})

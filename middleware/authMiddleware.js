@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const User = require("../models/User")
+const User = require("../models/UserModel")
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('./catchAsyncErrors')
 
@@ -13,3 +13,13 @@ exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
     req.user = await User.findById(decode.id)
     next()
 })
+
+// handling user roles
+exports.authorizeRoles = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(new ErrorHandler('You are not allowed to access this resource', 403))
+        }
+        next()
+    }
+}

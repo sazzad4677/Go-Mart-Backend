@@ -152,3 +152,43 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save();
     sendToken(user, 200, res)
 })
+
+// Admin route
+
+// Get All users /api/v1/admin/users
+exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
+    const users = await User.find();
+    res.status(200).json({
+        success: true,
+        users
+    })
+})
+// Get single users /api/v1/admin/user/
+exports.getUsersDetails = catchAsyncErrors(async (req, res, next) => {
+    const { email, username } = req.body
+    const user = await User.findOne({ $or: [{ email }, { username }] })
+    if (!user) {
+        return next(new ErrorHandler(`User not found with ${req.body.email && "email" || req.body.username && "username"} of  ${req.body.email || req.body.username} `,))
+    }
+    res.status(200).json({
+        success: true,
+        user
+    })
+})
+
+
+// Delete users /api/v1/admin/user/delete
+exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
+    const { email, username } = req.body
+    const user = await User.findOne({ $or: [{ email }, { username }] })
+    if (!user) {
+        return next(new ErrorHandler(`User not found with ${req.body.email && "email" || req.body.username && "username"} of  ${req.body.email || req.body.username} `,))
+    }
+
+    // Remove avatar todo
+
+    await user.remove()
+    res.status(200).json({
+        success: true,
+    })
+})

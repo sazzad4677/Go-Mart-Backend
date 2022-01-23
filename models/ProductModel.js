@@ -84,7 +84,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         ref: 'User',
     },
-    role: {
+    creatorRole: {
         type: String,
         ref: 'User',
     },

@@ -200,15 +200,11 @@ exports.updateUserProfileByAdmin = catchAsyncErrors(async (req, res, next) => {
     const { searchEmail, searchUsername, name, username, email, role, status, banPeriod, reason } = req.body
     // new user data 
     const newUserData = { name, email, username, role, status, ban: { banPeriod, reason } }
-    // finding the user in DB
-    const user = await User.find({ $or: [{ email: searchEmail }, { username: searchUsername }] })
-    if (user.length === 0) {
-        return next(new ErrorHandler(`User not found with ${searchEmail && "email" || searchUsername && "username"} of  ${searchEmail || searchUsername} `,))
-    }
+    
     // if there is a ban update the last ban field date and then update the user after the ban period is ends
     if (banPeriod > 0) {
         const date = new Date(new Date().setDate(new Date().getDate() + banPeriod))
-        // update last ban field  
+        // update last ban field and status
         await User.findOneAndUpdate({ $or: [{ email: searchEmail }, { username: searchUsername }] }, { status: "Banned", lastBan: { date: new Date(), typeOfBanned: status, banPeriod, reason } }, {
             new: true,
             runValidators: true,

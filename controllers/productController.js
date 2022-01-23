@@ -1,9 +1,12 @@
 const Product = require('../models/ProductModel')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
+const APIExtraFunctionality = require('../utils/APIExtraFunctionality')
 
 // Create new product => /api/v1/product/new
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
+    req.body.createdBy = req.user.username
+    req.body.creatorRole = req.user.role
     const product = await Product.create(req.body)
     res.status(201).json({
         success: true,
@@ -13,10 +16,21 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
 // Get all products => /api/v1/products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-    const products = await Product.find();
+    // for pagination total number of products
+    const resultPerPage = 10;
+    // total product in the database
+    const productCount = await Product.countDocuments()
+
+    const apiFeatures = new APIExtraFunctionality(Product.find(), req.query)
+        .search()
+        .filter()
+        .pagination(resultPerPage)
+
+    const products = await apiFeatures.query;
     res.status(200).json({
         success: true,
         count: products.length,
+        productCount,
         products
     })
 })
@@ -24,7 +38,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 // Get single Product details => /api/v1/admin/product/:id
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
     const products = await Product.find({productId: req.params.id});
-    if (products.length === 0) {
+    if (!products) {
         return next(new ErrorHandler("Product not found", 404))
     }
     res.status(200).json({
@@ -32,7 +46,6 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
         products
     })
 })
-
 
 // Update single product => /api/v1/admin/update-product/:id
 exports.updateSingleProduct = catchAsyncErrors(async (req, res, next) => {

@@ -83,12 +83,10 @@ const productSchema = new mongoose.Schema({
     createdBy: {
         type: String,
         ref: 'User',
-        required: true,
     },
     role: {
         type: String,
         ref: 'User',
-        required: true,
     },
     createdAt: {
         type: String,

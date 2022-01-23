@@ -4,6 +4,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors")
 const sendToken = require("../utils/jwtToken")
 const sendEmail = require("../utils/sendEmail")
 const crypto = require('crypto')
+const schedule = require('node-schedule');
 // Register a user => api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     const { username, name, email, password } = req.body;
@@ -38,7 +39,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     }
 
     if (user.status !== 'Active') {
-        return next(new ErrorHandler(`your account is banned  ${"for " + user.banPeriod + " days" || user.status === 'Permanent Banned' && "permanently"} , contact with administrator`, 401))
+        return next(new ErrorHandler(`your account is banned  ${"for " + user.ban.banPeriod + " days" || user.status === 'Permanent Banned' && "permanently"} , contact with administrator`, 401))
     }
 
     sendToken(user, 200, res)
@@ -101,7 +102,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Forgot password => api/v1/password/forgot-password
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
-    const user = await User.findOne({$or:[ {email: req.body.email}, {username: req.body.username}] })
+    const user = await User.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] })
     if (!user) {
         return next(new ErrorHandler("User not exists", 401))
     }
@@ -188,6 +189,46 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     // Remove avatar todo
 
     await user.remove()
+    res.status(200).json({
+        success: true,
+    })
+})
+
+// Update user profile By Admin => api/v1/admin/user/update/
+exports.updateUserProfileByAdmin = catchAsyncErrors(async (req, res, next) => {
+    // destructuring from request body
+    const { searchEmail, searchUsername, name, username, email, role, status, banPeriod, reason } = req.body
+    // new user data 
+    const newUserData = { name, email, username, role, status, ban: { banPeriod, reason } }
+    // finding the user in DB
+    const user = await User.find({ $or: [{ email: searchEmail }, { username: searchUsername }] })
+    if (user.length === 0) {
+        return next(new ErrorHandler(`User not found with ${searchEmail && "email" || searchUsername && "username"} of  ${searchEmail || searchUsername} `,))
+    }
+    // if there is a ban update the last ban field date and then update the user after the ban period is ends
+    if (banPeriod > 0) {
+        const date = new Date(new Date().setDate(new Date().getDate() + banPeriod))
+        // update last ban field  
+        await User.findOneAndUpdate({ $or: [{ email: searchEmail }, { username: searchUsername }] }, { status: "Banned", lastBan: { date: new Date(), typeOfBanned: status, banPeriod, reason } }, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        })
+        // remove the ban after the ban period ends
+        schedule.scheduleJob(date, async function () {
+            await User.findOneAndUpdate({ $or: [{ email: searchEmail }, { username: searchUsername }] }, { ban: { banPeriod: 0, reason: "" }, status: "Active" }, {
+                new: true,
+                runValidators: true,
+                useFindAndModify: false
+            })
+        })
+    }
+    // user update
+    await User.findOneAndUpdate({ $or: [{ email: searchEmail }, { username: searchUsername }] }, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
     res.status(200).json({
         success: true,
     })

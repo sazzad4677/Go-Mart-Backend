@@ -44,30 +44,21 @@ const userSchema = new mongoose.Schema({
         },
         default: 'Active'
     },
-    ban:{ 
-        banPeriod:{
+    ban: {
+        banPeriod: {
             type: Number,
             default: 0,
         },
-        reason:{
+        reason: {
             type: String,
         }
     },
-    lastBan:{
+    lastBan: {
         date: {
             type: Date,
-            default: new Date()
         },
         typeOfBanned: {
             type: String,
-            enum: {
-                values: [
-                    'Active', 
-                    'Banned',
-                    'Permanent Banned',
-                    'Restricted'
-                ]
-            }
         },
         banPeriod: {
             type: Number,
@@ -120,17 +111,4 @@ userSchema.methods.getPasswordResetToken = function () {
 
     return resetToken;
 }
-
-// Encrypting password before saving
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('ban')) {
-        next();
-    }
-    const {ban, reason} = this.ban;
-    this.lastBan.date = new Date();
-    this.lastBan.typeOfBanned = this.status;
-    this.lastBan.banPeriod = ban
-    this.lastBan.reason = reason
-})
-
 module.exports = mongoose.model('User', userSchema);

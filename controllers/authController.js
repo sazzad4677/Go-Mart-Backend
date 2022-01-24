@@ -166,10 +166,10 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 })
 // Get single users /api/v1/admin/user/
 exports.getUsersDetails = catchAsyncErrors(async (req, res, next) => {
-    const { email, username } = req.body
+    const { email, username } = req.query
     const user = await User.findOne({ $or: [{ email }, { username }] })
     if (!user) {
-        return next(new ErrorHandler(`User not found with ${req.body.email && "email" || req.body.username && "username"} of  ${req.body.email || req.body.username} `,))
+        return next(new ErrorHandler(`User not found with ${email && "email" || username && "username"} of  ${email || username} `,))
     }
     res.status(200).json({
         success: true,
@@ -180,47 +180,49 @@ exports.getUsersDetails = catchAsyncErrors(async (req, res, next) => {
 
 // Delete users /api/v1/admin/user/delete
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
-    const { email, username } = req.body
+    const { email, username } = req.query
     const user = await User.findOne({ $or: [{ email }, { username }] })
     if (!user) {
-        return next(new ErrorHandler(`User not found with ${req.body.email && "email" || req.body.username && "username"} of  ${req.body.email || req.body.username} `,))
+        return next(new ErrorHandler(`User not found with ${email && "email" || username && "username"} of  ${email || username} `,))
     }
-
     // Remove avatar todo
-
     await user.remove()
     res.status(200).json({
         success: true,
     })
 })
 
-// Update user profile By Admin => api/v1/admin/user/update/
+// Update user profile By Admin => api/v1/admin/user/update?email=email or api/v1/admin/user/update?username=username
 exports.updateUserProfileByAdmin = catchAsyncErrors(async (req, res, next) => {
-    // destructuring from request body
-    const { searchEmail, searchUsername, name, username, email, role, status, banPeriod, reason } = req.body
-    // new user data 
-    const newUserData = { name, email, username, role, status, ban: { banPeriod, reason } }
-    
-    // if there is a ban update the last ban field date and then update the user after the ban period is ends
+    const { email, username } = req.query
+    const { name, newEmail, newUsername, role, status, banPeriod, typeOfBanned, reason} = req.body 
+    const newUserData = {
+        name,
+        email: newEmail,
+        username: newUsername,
+        role,
+        status,
+        ban: banPeriod && { banPeriod, reason, typeOfBanned, date:new Date() }
+    }
+    //If there is a ban, update the last ban field first, then the user when the ban term has ended.
     if (banPeriod > 0) {
-        const date = new Date(new Date().setDate(new Date().getDate() + banPeriod))
-        // update last ban field and status
-        await User.findOneAndUpdate({ $or: [{ email: searchEmail }, { username: searchUsername }] }, { status: "Banned", lastBan: { date: new Date(), typeOfBanned: status, banPeriod, reason } }, {
-            new: true,
-            runValidators: true,
-            useFindAndModify: false
-        })
+        const banWithdrawDate = new Date(new Date().setMinutes(new Date().getMinutes() + banPeriod))
         // remove the ban after the ban period ends
-        schedule.scheduleJob(date, async function () {
-            await User.findOneAndUpdate({ $or: [{ email: searchEmail }, { username: searchUsername }] }, { ban: { banPeriod: 0, reason: "" }, status: "Active" }, {
-                new: true,
-                runValidators: true,
-                useFindAndModify: false
-            })
+        schedule.scheduleJob(banWithdrawDate, async function () {
+            await User.findOneAndUpdate({ $or: [{ email }, { username }] },
+                {
+                    ban: { banPeriod: 0, reason: "", typeOfBanned: "", date: "" },
+                    status: "Active",
+                    lastBan: {$set:["$ban"]}
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                    useFindAndModify: false
+                })
         })
     }
-    // user update
-    await User.findOneAndUpdate({ $or: [{ email: searchEmail }, { username: searchUsername }] }, newUserData, {
+    await User.findOneAndUpdate({ $or: [{ email }, { username }] }, newUserData, {
         new: true,
         runValidators: true,
         useFindAndModify: false

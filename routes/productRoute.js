@@ -12,7 +12,7 @@ router.route('/admin/delete-product/:id').delete(isAuthenticated, authorizeRoles
 router.route('/admin/delete-products').delete(isAuthenticated, authorizeRoles('admin', 'seller'), deleteMultiProduct);
 router.route('/admin/delete-all-products').delete(isAuthenticated, authorizeRoles('admin', 'seller'), deleteAllProduct);
 router.route('/review/').put(isAuthenticated, createProductReview);
-router.route('/reviews/').get(isAuthenticated, getProductReviews);
+router.route('/reviews').get(isAuthenticated, getProductReviews);
 router.route('/reviews/').delete(isAuthenticated, deleteProductReviews);
 
 module.exports = router;

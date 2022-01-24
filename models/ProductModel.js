@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
 
 const productSchema = new mongoose.Schema({
     productId: {
@@ -106,8 +105,4 @@ const productSchema = new mongoose.Schema({
     }
 })
 
-productSchema.pre('save', function (next) {
-    this.productId = "GM-" + Date.now();
-    next()
-})
 module.exports = mongoose.model('Product', productSchema);

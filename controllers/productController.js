@@ -2,6 +2,8 @@ const Product = require('../models/ProductModel')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const APIExtraFunctionality = require('../utils/APIExtraFunctionality')
+const Filter = require('bad-words')
+filter = new Filter();
 
 // Create new product => /api/v1/product/new
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
@@ -107,19 +109,20 @@ exports.deleteAllProduct = catchAsyncErrors(async (req, res, next) => {
 
 // create new review => api/v1/review
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
+    
     const {rating, comment, productId} = req.body
     const review = {
         user: req.user._id,
         name: req.user.name,
         rating: Number(rating),
-        comment
+        comment:filter.clean(comment)
     }
     const product = await Product.findById(productId);
     const isReviewed = product.reviews.find( review => review.user.toString() === req.user._id.toString())
     if (isReviewed) {
         product.reviews.forEach(review => {
             if (review.user.toString() === req.user._id.toString()) {
-                review.comment = comment;
+                review.comment = filter.clean(comment);
                 review.rating = rating
             }
         })

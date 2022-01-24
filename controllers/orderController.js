@@ -97,7 +97,7 @@ async function updateStock(id, quantity) {
 
 // delete order => /api/v1/admin/order/:id
 exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
-    const order = await Order.findById(req.params.id).populate('user', 'name email username')
+    const order = await Order.findById(req.params.id)
     if (!order) {
         return next(new ErrorHandler(' No Order Found with this id', 404))
     }

@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: true,
-        default: Date.now(),
+        default: "GM-" + Date.now()
     },
     name: {
         type: String,
@@ -66,6 +66,11 @@ const productSchema = new mongoose.Schema({
     },
     reviews: [
         {
+            user:{
+                type: mongoose.Schema.ObjectId,
+                ref: 'User', 
+                required: true,
+            },
             name: {
                 type: String,
                 required: true
@@ -80,13 +85,20 @@ const productSchema = new mongoose.Schema({
             }
         }
     ],
+    user:{
+        type: mongoose.Schema.ObjectId,
+        ref: 'User', 
+        required: true,
+    },
     createdBy: {
         type: String,
         ref: 'User',
+        required: true,
     },
-    creatorRole: {
+    role: {
         type: String,
         ref: 'User',
+        required: true,
     },
     createdAt: {
         type: String,
@@ -95,7 +107,7 @@ const productSchema = new mongoose.Schema({
 })
 
 productSchema.pre('save', function (next) {
-    this.productId = "GM-" + Date.now()+uuidv4().split("-").join("").slice(25,-1);
+    this.productId = "GM-" + Date.now();
     next()
 })
 module.exports = mongoose.model('Product', productSchema);

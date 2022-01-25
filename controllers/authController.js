@@ -201,7 +201,7 @@ exports.updateUserProfileByAdmin = catchAsyncErrors(async (req, res, next) => {
         email: newEmail,
         username: newUsername,
         role,
-        status,
+        status: banPeriod ? "Banned": "Active",
         ban: banPeriod && { banPeriod, reason, typeOfBanned, date:new Date() }
     }
     //If there is a ban, update the last ban field first, then the user when the ban term has ended.

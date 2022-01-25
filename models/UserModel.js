@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema({
             values: [
                 'Active',
                 'Banned',
-                'Permanent Banned',
                 'Restricted'
             ],
         },

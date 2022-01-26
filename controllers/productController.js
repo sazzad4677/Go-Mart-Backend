@@ -20,7 +20,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 // Get all products => /api/v1/products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     // for pagination total number of products
-    const resultPerPage = 10;
+    const resultPerPage = 1;
     // total product in the database
     const productsCount = await Product.countDocuments()
 
@@ -33,7 +33,8 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         productsCount,
-        products
+        products,
+        resultPerPage
     })
 })
 

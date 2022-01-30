@@ -1,4 +1,4 @@
-class APIExtraFunctionality {
+class SearchAndFilterClass {
     constructor(query, queryString) {
         this.query = query;
         this.queryString = queryString;
@@ -18,7 +18,7 @@ class APIExtraFunctionality {
         else if (name) {
             keyword.name = {
                 $regex: name,
-                $options: 'i',
+                $options: "i",
             }
         }
         this.query = this.query.find({ ...keyword });
@@ -49,4 +49,4 @@ class APIExtraFunctionality {
     }
 }
 
-module.exports = APIExtraFunctionality;
+module.exports = SearchAndFilterClass;

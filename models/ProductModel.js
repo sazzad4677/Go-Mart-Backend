@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
-
+const { v4: uuidv4 } = require('uuid');
+const randomId = uuidv4().split("-").join("").slice(25,-1);
 const productSchema = new mongoose.Schema({
     productId: {
         type: String,
         unique: true,
         required: true,
-        default: "GM-" + Date.now()
+        default: "GM-" + Date.now()+randomId
     },
     name: {
         type: String,

@@ -1,7 +1,7 @@
 const Product = require('../models/ProductModel')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
-const APIExtraFunctionality = require('../utils/APIExtraFunctionality')
+const SearchFilterAndPagination = require('../utils/SearchFilterAndPagination')
 const Filter = require('bad-words')
 filter = new Filter();
 
@@ -20,21 +20,21 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 // Get all products => /api/v1/products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     // for pagination total number of products
-    const resultPerPage = 1;
+    const resultPerPage = req.query.size;
     // total product in the database
-    const productsCount = await Product.countDocuments()
-
-    const apiFeatures = new APIExtraFunctionality(Product.find(), req.query)
+    const totalProductsCount = await Product.countDocuments()
+    const apiFeatures = new SearchFilterAndPagination(Product.find(), req.query)
         .search()
         .filter()
-        .pagination(resultPerPage)
-
-    const products = await apiFeatures.query;
+    let products = await apiFeatures.query;
+    let filteredProductsCount = products.length;
+    apiFeatures.pagination(resultPerPage)
+    products = await apiFeatures.query.clone();
     res.status(200).json({
         success: true,
-        productsCount,
+        totalProductsCount,
         products,
-        resultPerPage
+        filteredProductsCount
     })
 })
 
@@ -109,16 +109,16 @@ exports.deleteAllProduct = catchAsyncErrors(async (req, res, next) => {
 
 // create new review => api/v1/review
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
-    
-    const {rating, comment, productId} = req.body
+
+    const { rating, comment, productId } = req.body
     const review = {
         user: req.user._id,
         name: req.user.name,
         rating: Number(rating),
-        comment:filter.clean(comment)
+        comment: filter.clean(comment)
     }
     const product = await Product.findById(productId);
-    const isReviewed = product.reviews.find( review => review.user.toString() === req.user._id.toString())
+    const isReviewed = product.reviews.find(review => review.user.toString() === req.user._id.toString())
     if (isReviewed) {
         product.reviews.forEach(review => {
             if (review.user.toString() === req.user._id.toString()) {
@@ -126,11 +126,11 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
                 review.rating = rating
             }
         })
-    } else{
+    } else {
         product.reviews.push(review);
         product.numOfReviews = product.reviews.length
     }
-    product.ratings = product.reviews.reduce((acc, item) => item.rating+acc,0)/product.reviews.length
+    product.ratings = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
 
     await product.save();
 
@@ -141,7 +141,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
 // get product reviews => /api/v1/reviews?productId=GM-.....
 exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
-    const product = await Product.find({productId: req.query.productId})
+    const product = await Product.find({ productId: req.query.productId })
     if (!product.length) {
         return next(new ErrorHandler("Product not found", 404))
     }
@@ -156,9 +156,9 @@ exports.deleteProductReviews = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(req.query.productId)
     const reviews = product.reviews.filter(review => review._id.toString() !== req.query.id.toString())
     const numberOfReviews = reviews.length
-    const ratings = product.reviews.reduce((acc, item) => item.rating+acc,0)/reviews.length
+    const ratings = product.reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length
 
-    await Product.findByIdAndUpdate(req.query.productId,{
+    await Product.findByIdAndUpdate(req.query.productId, {
         reviews, ratings, numberOfReviews
     }, {
         new: true,

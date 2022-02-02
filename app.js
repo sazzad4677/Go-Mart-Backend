@@ -7,7 +7,6 @@ const order = require('./routes/orderRoute');
 const auth = require('./routes/authRoute')
 // error middleware
 const errorMiddleware = require('./middleware/errors')
-
 // app initialization
 const app = express();
 app.use(express.json());

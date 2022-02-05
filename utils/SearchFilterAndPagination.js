@@ -24,6 +24,12 @@ class SearchAndFilterClass {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+    sorting(sortingOrder) {
+        this.query = (sortingOrder === "-1" || sortingOrder === "1")
+            ? this.query.sort({ "price": sortingOrder })
+            : this.query = this.query.sort({})
+        return this;
+    }
     // Filter the products
     filter() {
         // Copy of the query string

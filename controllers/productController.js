@@ -25,6 +25,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     const totalProductsCount = await Product.countDocuments()
     const apiFeatures = new SearchFilterAndPagination(Product.find(), req.query)
         .search()
+        .sorting(req.query.sorting)
         .filter()
     let products = await apiFeatures.query;
     let filteredProductsCount = products.length;
@@ -118,6 +119,9 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
         comment: filter.clean(comment)
     }
     const product = await Product.findById(productId);
+    if (!product) {
+        return next(new ErrorHandler("Product not found", 404))
+    }
     const isReviewed = product.reviews.find(review => review.user.toString() === req.user._id.toString())
     if (isReviewed) {
         product.reviews.forEach(review => {

@@ -22,11 +22,24 @@ const userSchema = new mongoose.Schema({
         unique: true,
         validate: [validator.isEmail, 'Please enter valid Email address']
     },
+    phone:{
+        type: Number,
+        required: [true, 'Please Enter Your Phone Number'],
+        unique: true, 
+    },
     password: {
         type: String,
         required: [true, 'Please Enter Your password'],
         minLength: [6, 'Password must be at least 6 characters'],
         select: false,
+    },
+    avatar: {
+        public_id: {
+            type: String,
+        },
+        url: {
+            type: String,
+        }
     },
     role: {
         type: String,

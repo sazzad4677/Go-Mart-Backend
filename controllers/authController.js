@@ -5,17 +5,32 @@ const sendToken = require("../utils/jwtToken")
 const sendEmail = require("../utils/sendEmail")
 const crypto = require('crypto')
 const schedule = require('node-schedule');
+const cloudinary = require('cloudinary').v2
 // Register a user => api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-    const { username, name, email, password } = req.body;
+    let result;
+    if (req.body.avatar) {
+        const type = req.body.avatar.split(';')[0].split('/')[1];
+        const regex = new RegExp(/\.(jpg|jpeg|png)$/i)
+        if (!(regex.test(`.${type}`))) {
+            return next (new ErrorHandler("Only jpg, png and jpeg files are allowed", 400))
+        }
+        result = await cloudinary.uploader.upload(req.body.avatar, {
+            folder: 'avatar',
+            width: '150',
+            crop: 'scale',
+        })
+    }
+    const { username, name, email, password, phone } = req.body;
     const user = await User.create({
         username,
         name,
         email,
         password,
+        phone,
         avatar: {
-            public_id: '',
-            url: ''
+            public_id: result && result.public_id,
+            url: result && result.secure_url
         }
     })
     sendToken(user, 200, res)
@@ -195,14 +210,14 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 // Update user profile By Admin => api/v1/admin/user/update?email=email or api/v1/admin/user/update?username=username
 exports.updateUserProfileByAdmin = catchAsyncErrors(async (req, res, next) => {
     const { email, username } = req.query
-    const { name, newEmail, newUsername, role, status, banPeriod, typeOfBanned, reason} = req.body 
+    const { name, newEmail, newUsername, role, status, banPeriod, typeOfBanned, reason } = req.body
     const newUserData = {
         name,
         email: newEmail,
         username: newUsername,
         role,
-        status: banPeriod ? "Banned": "Active",
-        ban: banPeriod && { banPeriod, reason, typeOfBanned, date:new Date() }
+        status: banPeriod ? "Banned" : "Active",
+        ban: banPeriod && { banPeriod, reason, typeOfBanned, date: new Date() }
     }
     //If there is a ban, update the last ban field first, then the user when the ban term has ended.
     if (banPeriod > 0) {
@@ -213,7 +228,7 @@ exports.updateUserProfileByAdmin = catchAsyncErrors(async (req, res, next) => {
                 {
                     ban: { banPeriod: 0, reason: "", typeOfBanned: "", date: "" },
                     status: "Active",
-                    lastBan: {$set:["$ban"]}
+                    lastBan: { $set: ["$ban"] }
                 },
                 {
                     new: true,

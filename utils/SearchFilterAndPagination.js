@@ -41,7 +41,6 @@ class SearchAndFilterClass {
         // Advance filtering
         let queryString = JSON.stringify(queryCopy)
         queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`)
-
         this.query = this.query.find(JSON.parse(queryString))
         return this;
     }

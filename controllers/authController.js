@@ -38,7 +38,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
 // Login User => api/v1/login
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
-    const { username, email, password } = req.body
+    const { username, email, password, remember } = req.body
     if (((!email || username) && (email || !username)) || !password) {
         return next(new ErrorHandler("Please enter username or email & password", 400))
     }
@@ -57,7 +57,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler(`your account is banned  ${"for " + user.ban.banPeriod + " days" || user.status === 'Permanent Banned' && "permanently"} , contact with administrator`, 401))
     }
 
-    sendToken(user, 200, res)
+    sendToken(user, 200, res, remember)
 })
 
 // Logout user => api/v1/logout
@@ -93,7 +93,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     }
     user.password = req.body.password
     await user.save()
-    sendToken(user, 200, res)
+    sendToken(user, 200, res,)
 })
 
 // Update profile => api/v1/profile/update/:id

@@ -113,7 +113,6 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 // Update profile => api/v1/profile/update/
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.body)
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
@@ -123,15 +122,6 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     billingAddress: req.body.billingAddress,
     birthDay: req.body.birthDay,
   };
-  // check if email or username already exists
-  // if (req.body.email || req.body.username) {
-  //   const user = User.exists(
-  //     { $or: [{email: req.body.email }, { username:req.body.username }] }
-  //   )
-  //   if (user) {
-  //     return next(new ErrorHandler("Email or username already exists", 400))
-  //   }
-  // }
   // update avatar
   if (req.body.avatar) {
     const user = await User.findById(req.user.id);

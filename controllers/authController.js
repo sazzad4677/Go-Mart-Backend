@@ -6,6 +6,7 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const schedule = require("node-schedule");
 const cloudinary = require("cloudinary").v2;
+
 // Register a user => api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   let result;
@@ -33,6 +34,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
       public_id: result && result.public_id,
       url: result && result.secure_url,
     },
+    billingAddress: " ",
+    shippingAddress: " ",
   });
   sendToken(user, 200, res);
 });
@@ -108,18 +111,34 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// Update profile => api/v1/profile/update/:id
+// Update profile => api/v1/profile/update/
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  console.log(req.body)
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
     username: req.body.username,
+    gender: req.body.gender,
+    shippingAddress: req.body.shippingAddress,
+    billingAddress: req.body.billingAddress,
+    birthDay: req.body.birthDay,
   };
+  // check if email or username already exists
+  // if (req.body.email || req.body.username) {
+  //   const user = User.exists(
+  //     { $or: [{email: req.body.email }, { username:req.body.username }] }
+  //   )
+  //   if (user) {
+  //     return next(new ErrorHandler("Email or username already exists", 400))
+  //   }
+  // }
   // update avatar
   if (req.body.avatar) {
     const user = await User.findById(req.user.id);
-    const image_id = user.avatar.public_id;
-    const res = await cloudinary.uploader.destroy(image_id);
+    if (user.avatar.public_id) {
+      const image_id = user.avatar.public_id;
+      await cloudinary.uploader.destroy(image_id);
+    }
     const type = req.body.avatar.split(";")[0].split("/")[1];
     if (type !== "jpg" && type !== "png" && type !== "jpeg") {
       return next(
@@ -136,11 +155,11 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
       url: result.secure_url,
     };
   }
-
   await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
+    context: 'query'
   });
   res.status(200).json({
     success: true,

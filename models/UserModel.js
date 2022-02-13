@@ -3,7 +3,6 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -26,6 +25,17 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please Enter Your Phone Number'],
         unique: true, 
+    },
+    birthDay:{
+        type: Date,
+    },
+    shippingAddress: {
+        type: String,
+        required: [true, 'Please Enter Your Shipping Address'],
+    },
+    billingAddress: {
+        type: String,
+        required: [true, 'Please Enter Your Billing Address'],
     },
     password: {
         type: String,
@@ -92,7 +102,6 @@ const userSchema = new mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpires: Date,
 })
-
 // Encrypting password before saving
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {

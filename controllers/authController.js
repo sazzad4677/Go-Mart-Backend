@@ -6,6 +6,7 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const schedule = require("node-schedule");
 const cloudinary = require("cloudinary").v2;
+const os = require("os");
 
 // Register a user => api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -36,6 +37,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     },
     billingAddress: " ",
     shippingAddress: " ",
+    birthDay: "",
   });
   sendToken(user, 200, res);
 });
@@ -72,7 +74,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
       )
     );
   }
-
+  user.lastLoginDate = user.lastLoginDate ? user.lastLoginDate : Date.now();
+  user.device = os.version();
+  await user.save();
   sendToken(user, 200, res, remember);
 });
 
@@ -149,7 +153,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     new: true,
     runValidators: true,
     useFindAndModify: false,
-    context: 'query'
+    context: "query",
   });
   res.status(200).json({
     success: true,

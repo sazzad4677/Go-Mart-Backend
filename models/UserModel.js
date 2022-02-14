@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please Enter Your Phone Number'],
         unique: true, 
     },
+    gender:{
+        type: String,
+        enum: {values:['male', 'female']}
+    },
     birthDay:{
         type: Date,
     },
@@ -54,6 +58,9 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'user'
+    },
+    lastLoginDate: {
+        type: Date,
     },
     status: {
         type: String,
@@ -99,9 +106,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: `${new Date().toDateString()} Time ${((new Date().getHours() % 12) || 12)}:${new Date().getMinutes()} ${((new Date().getHours() >= 12 ? 'pm' : 'am'))}`,
     },
+    device: {
+        type: String,
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
 })
+
 // Encrypting password before saving
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {

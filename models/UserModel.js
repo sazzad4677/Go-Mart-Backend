@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
         enum: {values:['male', 'female']}
     },
     birthDay:{
-        type: Date,
+        type: String,
     },
     shippingAddress: {
         type: String,

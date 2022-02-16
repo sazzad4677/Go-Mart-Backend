@@ -22,13 +22,13 @@ const userSchema = new mongoose.Schema({
         validate: [validator.isEmail, 'Please enter valid Email address']
     },
     phone:{
-        type: Number,
+        type: String,
         required: [true, 'Please Enter Your Phone Number'],
         unique: true, 
     },
     gender:{
         type: String,
-        enum: {values:['male', 'female']}
+        enum: {values:['','male', 'female']}
     },
     birthDay:{
         type: String,

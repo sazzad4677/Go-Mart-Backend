@@ -101,30 +101,27 @@ exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Update or change password => api/v1/password/update-password/:id
-exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
-  const user = await User.findById(req.params.id).select("+password");
-
-  // Check previous password
-  const isMatch = await user.comparePassword(req.body.oldPassword);
-  if (!isMatch) {
-    return next(new ErrorHandler("Old Password is incorrect"));
-  }
-  user.password = req.body.password;
-  await user.save();
-  sendToken(user, 200, res);
-});
-
 // Update profile => api/v1/profile/update/
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const {
+    email,
+    username,
+    name,
+    phone,
+    gender,
+    shippingAddress,
+    billingAddress,
+    birthDay,
+  } = req.body;
   const newUserData = {
-    name: req.body.name.trim(),
-    email: req.body.email.trim(),
-    username: req.body.username.trim(),
-    gender: req.body.gender,
-    shippingAddress: req.body.shippingAddress,
-    billingAddress: req.body.billingAddress,
-    birthDay: req.body.birthDay,
+    name,
+    email,
+    username,
+    phone,
+    gender,
+    shippingAddress,
+    billingAddress,
+    birthDay,
   };
   // update avatar
   if (req.body.avatar) {
@@ -158,6 +155,20 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
   });
+});
+
+// Update or change password => api/v1/password/update-password/:id
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id).select("+password");
+
+  // Check previous password
+  const isMatch = await user.comparePassword(req.body.oldPassword);
+  if (!isMatch) {
+    return next(new ErrorHandler("Old Password is incorrect"));
+  }
+  user.password = req.body.password;
+  await user.save();
+  sendToken(user, 200, res);
 });
 
 // Forgot password => api/v1/password/forgot-password
@@ -225,7 +236,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Admin route
-
 // Get All users /api/v1/admin/users
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   const users = await User.find();

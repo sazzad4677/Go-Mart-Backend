@@ -74,7 +74,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
       )
     );
   }
-  user.lastLoginDate = user.lastLoginDate ? user.lastLoginDate : Date.now();
+  user.lastLoginDate = Date.now();
   user.device = os.version();
   await user.save();
   sendToken(user, 200, res, remember);
@@ -159,7 +159,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Update or change password => api/v1/password/update-password/:id
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
-  const user = await User.findById(req.params.id).select("+password");
+  const user = await User.findById(req.user.id).select("+password");
 
   // Check previous password
   const isMatch = await user.comparePassword(req.body.oldPassword);

@@ -24,13 +24,18 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
       crop: "scale",
     });
   }
-  const { username, name, email, password, phone } = req.body;
+  const { username, name, email, password, phone, areaName, placeId } =
+    req.body;
   const user = await User.create({
     username,
     name,
     email,
     password,
     phone,
+    area: {
+      areaName: areaName,
+      placeId: placeId,
+    },
     avatar: {
       public_id: result && result.public_id,
       url: result && result.secure_url,
@@ -112,6 +117,8 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     shippingAddress,
     billingAddress,
     birthDay,
+    areaName,
+    placeId,
   } = req.body;
   const newUserData = {
     name,
@@ -122,6 +129,10 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     shippingAddress,
     billingAddress,
     birthDay,
+    area: {
+      areaName: areaName,
+      placeId: placeId,
+    },
   };
   // update avatar
   if (req.body.avatar) {
@@ -166,7 +177,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   if (!isMatch) {
     return next(new ErrorHandler("Old Password is incorrect"));
   }
-  user.password = req.body.password;
+  user.password = req.body.newPassword;
   await user.save();
   sendToken(user, 200, res);
 });

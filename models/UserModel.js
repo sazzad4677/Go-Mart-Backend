@@ -12,17 +12,20 @@ const userSchema = new mongoose.Schema({
     },
     name: {
         type: String,
+        trim: true,
         required: [true, 'Please Enter Your name'],
         maxLength: [255, 'Your name cannot exceeds 255 characters'],
     },
     email: {
         type: String,
+        trim: true,
         required: [true, 'Please Enter Your email'],
         unique: true,
         validate: [validator.isEmail, 'Please enter valid Email address']
     },
     phone:{
         type: String,
+        trim: true,
         required: [true, 'Please Enter Your Phone Number'],
         unique: true, 
     },
@@ -30,16 +33,26 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: {values:['','male', 'female']}
     },
+    area:{
+        areaName: {
+            type: String,
+            trim: true,
+            required: [true, 'Please Enter Area Name'],
+        },
+        placeId: {
+            type: String,
+        }
+    },
     birthDay:{
         type: String,
     },
     shippingAddress: {
         type: String,
-        required: [true, 'Please Enter Your Shipping Address'],
+        trim: true,
     },
     billingAddress: {
         type: String,
-        required: [true, 'Please Enter Your Billing Address'],
+        trim: true,
     },
     password: {
         type: String,

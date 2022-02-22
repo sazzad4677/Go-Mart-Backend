@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon server",
-    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon server"
+    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon server",
+    "seeder": "node utils/seeders.js"
   },
   "keywords": [],
   "author": "",

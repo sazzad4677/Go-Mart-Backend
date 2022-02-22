@@ -1,0 +1,254 @@
+[
+  {
+    "productId": "1",
+    "name": "Green Cauliflowers",
+    "price": "45.89",
+    "description": "Cauliflower is as good a source of fiber and vitamins.Its ingredients may help strengthen bones, boost the cardiovascular system, and prevent cancer. Tasty ways of eating cauliflower include cauliflower crust pizza and cauliflower and cheese soup. People who are using blood thinners should not suddenly start eating a lot of cauliflower because the high levels of vitamin K could react adversely with the drugs.",
+    "ratings": 4.5,
+    "images": [
+      {
+        "public_id": "Products/green-cauliflowers-thumbnail_jehvn9.jpg",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645423139/Products/green-cauliflowers-thumbnail_jehvn9.jpg"
+      }
+    ],
+    "category": "Fresh Vegetables",
+    "seller": "Chaldal",
+    "stock": 50,
+    "numOfReviews": 32,
+    "reviews": []
+  },
+  {
+    "productId": "2",
+    "name": "Dates",
+    "price": "315.00",
+    "description": "Lentils are edible pulses or seeds that belong to the legume family. These lentils mostly consist of two halves covered in a husk. Both the seeds are lens-shaped, which is probably why they are named Lens culinaris in Latin. They are also one of the oldest known sources of food, dating back more than 9,000 years. When it comes to affordable healthy eating, PUSTI lentils are your new best friend. PUSTI Deshi Moshur Dal is a nutritional powerhouse, offering plenty of essential nutrients that benefit your health, and they're also extremely versatile in the kitchen, so you can eat them without getting bored. Including lentils in your diet will benefit both your short- and long-term health .",
+    "ratings": 1.65,
+    "images": [
+      {
+        "public_id": "Products/31752661288_8dd0993343_b_lbhvkp.jpg",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645423083/Products/31752661288_8dd0993343_b_lbhvkp.jpg"
+      }
+    ],
+    "category": "Fresh Vegetables",
+    "seller": "ABC",
+    "stock": 0,
+    "numOfReviews": 2,
+    "reviews": []
+  },
+  {
+    "productId": "3",
+    "name": "Pomegranate",
+    "price": "26.99 ",
+    "description": "Pomegranate fruit is one of the most popular, nutritionally rich fruit with unique flavor, taste, and health promoting characteristics. The fruit is moderate in calories, holds about 83 calories per 100 grams; slightly more than that of in the apples. It contains no cholesterol or saturated fats. It is a good source of soluble and insoluble dietary fibers; providing about 4 grams per 100 g (about 12% of RDA).",
+    "ratings": 3.5,
+    "images": [
+      {
+        "public_id": "Products/Pomegranate_Juice__282019_29_b6wqtg.jpg",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645423056/Products/Pomegranate_Juice__282019_29_b6wqtg.jpg"
+      },
+      {
+        "public_id": "Products/pomegranate-6757729_960_720_cqig7m",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645423016/Products/pomegranate-6757729_960_720_cqig7m.jpg"
+      }
+    ],
+    "category": "Fresh Vegetables",
+    "seller": "Amazon",
+    "stock": 1,
+    "numOfReviews": 12,
+    "reviews": []
+  },
+  {
+    "productId": "4",
+    "name": "Guava",
+    "price": "299.00 ",
+    "description": "Guava is a tropical fruit rich in high-profile nutrients. Thai guavas are generally the size of a softball with apple green skin that can range from bumpy to smooth. The flesh is white with pale yellow seeds and tends to be drier than the pink type of guavas. Thai guavas are only mildly sweet and have very little fragrance. The crunchy flesh and hard seeds are both edible. Guavas come in two broad groups divided by the color of their flesh: pink and white. Thai guavas are a group of guavas within the white category that include a number of varieties. Thai Guava Guava is very helpful for those who want to lose weight without compromising their intake of proteins, vitamins and fiber. Guava is very high in roughage and rich in vitamins, proteins and minerals Adding a medium-sized guava to your lunch and you will not feel hungry again until the evening.",
+    "ratings": 4.5,
+    "images": [
+      {
+        "public_id": "Products/jambu-2836033_960_720_rvmvrq",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422983/Products/jambu-2836033_960_720_rvmvrq.png"
+      },
+      {
+        "public_id": "Products/j16249769712_8df264627d_b_kcnpl1",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422955/Products/16249769712_8df264627d_b_kcnpl1.jpg"
+      },
+      {
+        "public_id": "Products/guava-1796858_960_720_nsbabo",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422933/Products/guava-1796858_960_720_nsbabo.jpg"
+      }
+    ],
+    "category": "Fresh Vegetables",
+    "seller": "Amazon",
+    "stock": 11,
+    "numOfReviews": 112,
+    "reviews": []
+  },
+  {
+    "productId": "5",
+    "name": "Bananas",
+    "price": "126.99 ",
+    "description": "Banana is the most popular fresh fruit in all over the world. It has lots of variety. Chompa Banana is one of them. Chompa Bananas are comparatively smaller than the normal bananas. Bananas are great super food which provides us with energy, make us feel full and provide our body with essential nutrients and high amount of fiber. Banana is one of the high calorie tropical fruits. 100 grams of its flesh carries 90 calories. Besides, it contains good amount of health benefiting fiber, anti-oxidants, minerals, and vitamins. Bananas could help you to feel happier as they contain tryptophan, a type of protein that the body converts into serotonin, known to promote relaxation and improve mood.",
+    "ratings": 4.8,
+    "images": [
+      {
+        "public_id": "Products/Bananas_x4a9uc",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422877/Products/Bananas_x4a9uc.jpg"
+      }
+    ],
+    "category": "Fresh Vegetables",
+    "seller": "Amazon",
+    "stock": 122,
+    "numOfReviews": 2671,
+    "reviews": []
+  },
+  {
+    "productId": "12",
+    "name": "Apple",
+    "price": "496.95",
+    "description": "Green apples provide a huge range of health and beauty benefits, especially when compared to red apples. Green apple has some sweet and sour variety and amazing taste. Green apples possess glossy skin, along with a juicy flesh. They're high in fiber and help keep the digestive tract clean and healthy. Green apples are energy givers, contain both flavonoid and polyphenol, also can help prevent diarrhea. One of the major green apple benefits is the high fiber content. These high levels of fiber can help to reduce cholesterol. Green apple decreases chance of colon cancer. A 1-cup serving of green apple juice has 253 calories, with less than 1 gram of total fat. It also has 1.92 grams of protein and almost 42 grams of sugar. Because of this, a single serving of green apple juice has over 59 grams of carbohydrates.",
+    "ratings": 4.7,
+    "images": [
+      {
+        "public_id": "Products/IMG_6868_dewtmh",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422853/Products/IMG_6868_dewtmh.jpg"
+      }
+    ],
+    "category": "Nuts & Dried Fruits",
+    "seller": "Amazon",
+    "stock": 131,
+    "numOfReviews": 222,
+    "reviews": []
+  },
+  {
+    "productId": "6",
+    "name": "Chocolate",
+    "price": "949.99",
+    "description": "Officia officia incididunt mollit nulla culpa et ipsum excepteur enim. Esse elit elit enim ad aliquip enim reprehenderit irure. Laboris aliqua esse eu exercitation mollit magna dolor veniam nostrud. Ipsum culpa ipsum qui nostrud ipsum. Est est sint fugiat magna mollit culpa id labore nisi. Cillum do ad ad veniam est magna labore eiusmod reprehenderit fugiat aute.",
+    "ratings": 4.9,
+    "images": [
+      {
+        "public_id": "Products/Chocolate__28blue_background_29_qycw7u",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422826/Products/Chocolate__28blue_background_29_qycw7u.jpg"
+      },
+      {
+        "public_id": "50939223137_1af05c0a16_b_eqlnao",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422809/Products/50939223137_1af05c0a16_b_eqlnao.jpg"
+      }
+    ],
+    "category": "Candy & Chocolate",
+    "seller": "Amazon",
+    "stock": 0,
+    "numOfReviews": 56,
+    "reviews": []
+  },
+  {
+    "productId": "7",
+    "name": "EGGS",
+    "price": "2.75",
+    "description": "Ex sint qui voluptate id commodo nostrud non. Laboris esse id dolor amet. Deserunt proident duis fugiat non labore. Nostrud sit voluptate culpa enim sunt duis sunt. Occaecat et labore amet adipisicing labore non culpa minim. Tempor sunt officia consequat dolore ullamco dolor sunt occaecat. Velit ea tempor eu magna est id laboris irure mollit id proident.",
+    "ratings": 5,
+    "images": [
+      {
+        "public_id": "Products/5483256997_7ac715aa83_b_fgecar",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422717/Products/5483256997_7ac715aa83_b_fgecar.jpg"
+      },
+      {
+        "public_id": "Products/46602565844_dfe9f12907_b_oolss5",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422707/Products/46602565844_dfe9f12907_b_oolss5.jpg"
+      }
+    ],
+    "category": "Eggs",
+    "seller": "Kauffman's Fruit Farm & Market",
+    "stock": 500,
+    "numOfReviews": 1,
+    "reviews": []
+  },
+  {
+    "productId": "8",
+    "name": "Nescafe Coffee",
+    "price": "2.75",
+    "description": "Excepteur duis commodo in ullamco duis commodo veniam ad voluptate. Adipisicing elit pariatur ullamco reprehenderit commodo incididunt. Voluptate duis Lorem sunt et esse adipisicing sint laborum deserunt amet aliqua deserunt excepteur consectetur.",
+    "ratings": 5,
+    "images": [
+      {
+        "public_id": "Products/4929403620_80d9da90dd_b_yw78zp",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422693/Products/14929403620_80d9da90dd_b_yw78zp.jpg"
+      },
+      {
+        "public_id": "Products/12831785083_967a57d83f_b_igpnsm",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422685/Products/12831785083_967a57d83f_b_igpnsm.jpg"
+      },
+      {
+        "public_id": "Products/14479665403_26fbd5c2ca_b_j9kuty",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422675/Products/14479665403_26fbd5c2ca_b_j9kuty.jpg"
+      }
+    ],
+    "category": "Coffee",
+    "seller": "Kauffman's Fruit Farm & Market",
+    "stock": 500,
+    "numOfReviews": 1,
+    "reviews": []
+  },
+  {
+    "productId": "9",
+    "name": "Cocacola",
+    "price": "2.75",
+    "description": "Anim ullamco veniam velit ut ad irure dolor qui. Eu eiusmod nulla qui nulla. Enim anim ex duis ut nostrud velit ad. Aliqua incididunt ad sit in deserunt ipsum. Consequat eu enim ut reprehenderit adipisicing esse commodo do. Occaecat sunt laborum culpa duis consequat tempor enim exercitation fugiat. Ea id consectetur voluptate amet sint sit minim ea esse enim incididunt.",
+    "ratings": 5,
+    "images": [
+      {
+        "public_id": "Products/cocacola-5016273_960_720_gjxoho",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422637/Products/cocacola-5016273_960_720_gjxoho.jpg"
+      },
+      {
+        "public_id": "Products/8413801310_9a4b8592e1_z_wa8vxr",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422631/Products/8413801310_9a4b8592e1_z_wa8vxr.jpg"
+      }
+    ],
+    "category": "Canned Food",
+    "seller": "Kauffman's Fruit Farm & Market",
+    "stock": 500,
+    "numOfReviews": 1,
+    "reviews": []
+  },
+  {
+    "productId": "10",
+    "name": "Chili",
+    "price": "2.75",
+    "description": "Commodo enim ipsum id occaecat est. Lorem est eiusmod incididunt laborum esse commodo consectetur. Adipisicing aute pariatur ut et laborum officia labore labore deserunt sint. Minim velit consectetur ad nisi nostrud deserunt. Aliquip do est aliqua sunt. Dolore irure consectetur culpa id velit quis est nostrud eu deserunt.",
+    "ratings": 5,
+    "images": [
+      {
+        "public_id": "Products/48404574017_bb1f944a61_b_ffrrny",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422607/Products/48404574017_bb1f944a61_b_ffrrny.jpg"
+      }
+    ],
+    "category": "Fresh Vegetables",
+    "seller": "Kauffman's Fruit Farm & Market",
+    "stock": 500,
+    "numOfReviews": 1,
+    "reviews": []
+  },
+  {
+    "productId": "11",
+    "name": "Tomato",
+    "price": "2.75",
+    "description": "Esse dolor pariatur consectetur veniam duis laboris voluptate do velit velit sit sint consectetur. Consequat irure occaecat labore aliqua non ipsum consectetur ipsum mollit adipisicing. Esse do occaecat cupidatat duis aute. Tempor adipisicing laborum ullamco aliqua. Exercitation laboris ex incididunt commodo et nisi voluptate laborum aute magna ea. Eiusmod Lorem quis proident anim aliqua aute est commodo. Consectetur ipsum Lorem officia aliquip amet sint.",
+    "ratings": 5,
+    "images": [
+      {
+        "public_id": "Products/Chrisdesign_tomato_extzao",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422590/Products/Chrisdesign_tomato_extzao.png"
+      },
+      {
+        "public_id": "Products/2700323949_591c921968_b_rq4frg",
+        "url": "https://res.cloudinary.com/dly5iyk86/image/upload/v1645422589/Products/2700323949_591c921968_b_rq4frg.jpg"
+      }
+    ],
+    "category": "Fresh Vegetables",
+    "seller": "Kauffman's Fruit Farm & Market",
+    "stock": 500,
+    "numOfReviews": 1,
+    "reviews": []
+  }
+]

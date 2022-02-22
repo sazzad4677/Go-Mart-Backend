@@ -19,6 +19,7 @@ app.use(cookieParser());
 app.use(fileUpload());
 
 //routes
+app.use("/", "Hello, Welcome");
 app.use("/api/v1", auth);
 app.use("/api/v1", products);
 app.use("/api/v1", order);

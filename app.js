@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
+let cors = require("cors");
 // import all routes
 const products = require("./routes/productRoute");
 const order = require("./routes/orderRoute");
@@ -13,6 +14,7 @@ const errorMiddleware = require("./middleware/errors");
 dotenv.config({ path: "./config/config.env" });
 // app initialization
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

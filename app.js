@@ -14,8 +14,8 @@ const errorMiddleware = require("./middleware/errors");
 dotenv.config({ path: "./config/config.env" });
 // app initialization
 const app = express();
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());

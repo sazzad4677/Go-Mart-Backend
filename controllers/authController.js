@@ -10,6 +10,7 @@ const os = require("os");
 
 // Register a user => api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  console.log(" error don't know")
   let result;
   if (req.body.avatar) {
     const type = req.body.avatar.split(";")[0].split("/")[1];

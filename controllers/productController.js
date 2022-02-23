@@ -19,7 +19,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
 // Get all products => /api/v1/products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  console.log("got frontend request");
+  console.log("got frontend request ");
   // for pagination total number of products
   const resultPerPage = req.query.size;
   // total product in the database

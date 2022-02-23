@@ -11,20 +11,20 @@ const os = require("os");
 // Register a user => api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   console.log(" error don't know")
-  // let result;
-  // if (req.body.avatar) {
-  //   const type = req.body.avatar.split(";")[0].split("/")[1];
-  //   if (type !== "jpg" && type !== "png" && type !== "jpeg") {
-  //     return next(
-  //       new ErrorHandler("Only jpg, png and jpeg files are allowed", 400)
-  //     );
-  //   }
-  //   result = await cloudinary.uploader.upload(req.body.avatar, {
-  //     folder: "avatar",
-  //     width: "150",
-  //     crop: "scale",
-  //   });
-  // }
+  let result;
+  if (req.body.avatar) {
+    const type = req.body.avatar.split(";")[0].split("/")[1];
+    if (type !== "jpg" && type !== "png" && type !== "jpeg") {
+      return next(
+        new ErrorHandler("Only jpg, png and jpeg files are allowed", 400)
+      );
+    }
+    result = await cloudinary.uploader.upload(req.body.avatar, {
+      folder: "avatar",
+      width: "150",
+      crop: "scale",
+    });
+  }
   const { username, name, email, password, phone, areaName, placeId } =
     req.body;
   const user = await User.create({
@@ -37,10 +37,10 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
       areaName: areaName,
       placeId: placeId,
     },
-    // avatar: {
-    //   public_id: result && result.public_id,
-    //   url: result && result.secure_url,
-    // },
+    avatar: {
+      public_id: result && result.public_id,
+      url: result && result.secure_url,
+    },
     billingAddress: " ",
     shippingAddress: " ",
     birthDay: "",

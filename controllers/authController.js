@@ -79,9 +79,6 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
       )
     );
   }
-  user.lastLoginDate = Date.now();
-  user.device = os.version();
-  await user.save();
   sendToken(user, 200, res, remember);
 });
 
@@ -114,8 +111,9 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     name,
     phone,
     gender,
-    shippingAddress,
-    billingAddress,
+    address,
+    city,
+    postalCode,
     birthDay,
     areaName,
     placeId,
@@ -126,8 +124,9 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     username,
     phone,
     gender,
-    shippingAddress,
-    billingAddress,
+    address,
+    city,
+    postalCode,
     birthDay,
     area: {
       areaName: areaName,

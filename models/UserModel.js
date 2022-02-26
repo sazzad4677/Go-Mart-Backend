@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         validate: [validator.isEmail, 'Please enter valid Email address']
     },
-    phone:{
+    phoneNumber:{
         type: String,
         trim: true,
         required: [true, 'Please Enter Your Phone Number'],
@@ -46,11 +46,15 @@ const userSchema = new mongoose.Schema({
     birthDay:{
         type: String,
     },
-    shippingAddress: {
+    address: {
         type: String,
         trim: true,
     },
-    billingAddress: {
+    city: {
+        type: String,
+        trim: true,
+    },
+    postalCode: {
         type: String,
         trim: true,
     },

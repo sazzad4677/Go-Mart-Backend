@@ -6,7 +6,7 @@
 
 ## Important Links
 
-- [Live Website](https://go-mart-bd.netlify.app/)
+- [Live Website](https://go-mart.netlify.app/)
 - [Client Repository](https://github.com/sazzad4677/GoMart-Frontend)
 - [Backend Repository](https://github.com/sazzad4677/Go-Mart-Backend)
 - [Project Presentation](https://docs.google.com/presentation/d/1GY-KP-WtdrAoqU_n7PVSu98SbTX4QodbIZJ5R7Lexow/edit#slide=id.p1)

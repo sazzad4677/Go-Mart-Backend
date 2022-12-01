@@ -9,9 +9,10 @@ let cors = require("cors");
 const products = require("./routes/productRoute");
 const order = require("./routes/orderRoute");
 const auth = require("./routes/authRoute");
+const payment = require("./routes/paymentRoute");
 // error middleware
 const errorMiddleware = require("./middleware/errors");
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: './config/config.env' })
 // app initialization
 const app = express();
 app.use(express.json());
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1", auth);
 app.use("/api/v1", products);
 app.use("/api/v1", order);
+app.use("/api/v1", payment);
 
 // error middleware
 app.use(errorMiddleware);

@@ -16,10 +16,11 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     } = req.body
     orderItems.forEach(async (item) => {
         const product = await Product.findById(item.product)
-        if (product.stock) {
+        if (!product.stock) {
             return next(new ErrorHandler("product is stock out"), 400)
         }
     });
+    console.log(req.body)
     const order = await Order.create({
         orderItems,
         shippingInfo,
@@ -29,7 +30,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
         totalPrice,
         paymentInfo,
         paidAt: Date.now(),
-        user: req.user._id,
+        user: paymentInfo.user,
     })
     res.status(200).json({
         success: true,

@@ -38,6 +38,16 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     filteredProductsCount,
   });
 });
+// Get all products => /api/v1/all-products
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
+  // total product in the database
+  const products = await Product.find({});
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
 
 // Get single Product details => /api/v1/product/:id
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
